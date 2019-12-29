@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="search_box" name="Search box">
+
+  <div class="header-block header-block-search align-self-center col-auto block">
+    <div class="align-self-center col-auto header-block header-block-search ">
+      <div class="icon d-lg-none">
+        <a class="icon-link" href="https://demo.dev.shopinvader.com/.search-bar" data-toggle="collapse">
+          <img src="home_files/search-icon.png" alt="Search product..." class="icon-img"/>
+            <span class="icon-label d-none d-lg-flex">Search product...</span>
+          </a>
+        </div>
+        <div class="collapse d-lg-block w-100 search-bar">
+          <div class="d-flex p-2 pr-3 pl-3 justify-content-between d-lg-none">
+            <div>
+              <span class="h4">
+                Search product...
+              </span>
+            </div>
+            <div>
+              <a href="https://demo.dev.shopinvader.com/.search-bar" data-toggle="collapse">
+                <i class="fas fa-times text-dark fa-2x"></i>
+              </a>
+            </div>
+          </div>
+          <form method="GET" action="/search" class="search-form d-flex flex-row pt-md-2 pt-md-3 ">
+            <span class="algolia-autocomplete" style="position: relative; display: inline-block; direction: ltr;">
+              <input type="text" class="form-control search-input aa-hint" aria-label="" aria-describedby="Product search" autocomplete="off" data-autosubmit="" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: rgb(255, 255, 255) none repeat scroll 0% 0% padding-box;" readonly="readonly" aria-hidden="true" spellcheck="false" tabindex="-1"></input>
+              <input type="text" class="form-control search-input aa-input" id="header-search-input" placeholder="" aria-label="" aria-describedby="Product search" autocomplete="off" name="q" data-autosubmit="" spellcheck="false" role="combobox" aria-autocomplete="both" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-0" style="position: relative; vertical-align: top; background-color: transparent;" dir="auto"></input>
+                  <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Comfortaa; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;"></pre>
+                  <span class="aa-dropdown-menu header-dropdown-menu container" style="position: absolute; top: 0px; left: 0px; z-index: 100; display: none; right: auto;" role="listbox" id="algolia-autocomplete-listbox-0">
+                    <div class="row">
+                      <div class="aa-dataset-product col-12  col-md-8"></div>
+                      <div class="aa-dataset-category col-12 col-md-4 d-none d-md-block"></div>
+                    </div>
+                </span></span>
+                <button class="btn btn-link btn-lg p-0 search-icon" name="submit" type="submit">
+                  <img src="home_files/search-icon.png" alt="Search product..."/>
+                  </button>
+                </form>
+                <div class="small text-left pt-2 w-100">
+                  <div class="font-weight-bold ">
+                  </div>
+                </div>
+              </div>
+              <div id="header-search-hit" class="d-none search-result">
+                <div id="header-search-product-title">
+                  <div class="font-weight-bold">
+                    Products
+                    <span class="nb_hits"></span>
+                  </div>
+                </div>
+                <div id="header-search-product-link">
+                  <div class="row">
+                    <div class="col-12 text-right pt-2 ">
+                      <a data-href="/search" href="#" class="btn btn-primary btn-search-product">
+                        View all results
+                        <span class="nb_hits"></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div id="header-search-product-empty">
+                  <div class="pt-3 pb-3">
+                    No product found.
+                  </div>
+                </div>
+                <div id="header-search-category-title" class=" ">
+                  <div class="font-weight-bold">
+                    Categories
+                  </div>
+                </div>
+                <div id="header-search-category-empty">
+                  <div class="pt-3 pb-3">
+                    No category found.
+                  </div>
+                </div>
+                <div id="header-search-category-link">
+                  <div class="row">
+                    <div class="col-12 text-right ">
+                      <a href="#" class="btn btn-success">
+                        search_category_all
+                        <span class="nb_hits"></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div id="header-search-hit-content">
+                  <div class="row">
+                    <div class="aa-dataset-product col-12  col-md-8"></div>
+                    <div class="aa-dataset-category col-12 col-md-4 d-none d-md-block"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
+      </odoo>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="account_quotations" name="Shopinvader Account Quotations">
+
+<!-- {% extends 'layouts/account' %} -->
+<!-- {% block 'body/content/tabcontent' %} -->
+<!--   {% paginate store.quotations by 4 %} -->
+    <t t-if="len(store['quotations']) == 0">
+      <div class="text-center">
+        You do not have any quotations !
+      </div>
+    </t>
+    <t t-else="">
+      <div class="row justify-content-between">
+        <div class="col-auto pl-0">
+          <h1 class="h3">
+<!--             {{ 'account_quotation_title' | translate }} -->
+          </h1>
+        </div>
+        <div class="col-auto pr-0">      
+          <!-- {%include 'paginate' with paginate %} -->
+        </div>
+      </div>
+      <div class="row">
+
+        <!-- Not implemented yet got to include the PR for shopinvader quotations on Odoo Main -->
+
+<!--         {% for quotation in paginate.collection %} -->
+<!--           <div class="col-12 border mb-2 mt-2"> -->
+<!--             <div class="row justify-content-between align-items-center pt-2 pb-2"> -->
+<!--               <div class="col-auto"> -->
+<!--                 <div class="row align-items-center"> -->
+<!--                   <div class="col-auto border-right lead"> -->
+<!--                     <a href="{% path_to account_quotation_details %}?quotation_id={{quotation.id}}" class="text-dark font-weight-bold"> -->
+<!--                       {{quotation.name}} -->
+<!--                     </a> -->
+<!--                   </div> -->
+<!--                   <div class="col-auto border-right lead"> -->
+<!--                     {{quotation.date  | format_date }} -->
+<!--                   </div> -->
+<!--                   <div class="col-auto lead"> -->
+<!--                     {% include 'currency' | value: quotation.amount.total %} -->
+<!--                   </div> -->
+<!--                   <div class="col-12 col-md-auto"> -->
+<!--                     {% case quotation.state%} -->
+<!--                       {% when 'estimating' %} -->
+<!--                       <div class="badge badge-primary text-white"> -->
+<!--                         <i class="fa fa-cogs"></i> {{'account_quotation_status_' | append: quotation.state | translate}} -->
+<!--                       </div> -->
+<!--                       {% when 'estimated' %} -->
+<!--                       <div class="badge badge-success"> -->
+<!--                         <i class="far fa-file"></i> {{'account_quotation_status_' | append: quotation.state | translate}} -->
+<!--                       </div> -->
+<!--                       {% else %} -->
+<!--                       <div class="badge badge-warning"> -->
+<!--                         {{quotation.state }} -->
+<!--                       </div> -->
+<!--                     {% endcase %} -->
+<!--                   </div> -->
+<!--                 </div> -->
+
+<!--               </div> -->
+              
+<!--               <div class="col-12 col-sm-auto text-center text-sm-right pt-3 pt-md-0"> -->
+<!--                 <a href="{% path_to account_quotation_details %}?quotation_id={{quotation.id}}" class="btn btn-outline-primary"> -->
+<!--                   {{'show_more' | translate}} -->
+<!--                 </a> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         {% endfor %} -->
+      </div>
+<!--       <div class="row justify-content-end"> -->
+<!--         <div class="col-auto pr-0"> -->      
+<!--           {%include 'paginate' with paginate %} -->
+<!--         </div> -->
+<!--       </div> -->
+    </t> <!-- {% endif %} -->
+
+  </template>
+</odoo>
+
+
+<!-- title: Order page -->
+<!-- slug: quotations -->
+<!-- handle: account_quotations -->
+<!-- position: 99 -->
+<!-- listed: false -->
+<!-- published: true -->
+<!-- is_layout: false -->
+<!-- seo_title: My quotations | Shopinvader demo -->
+
+<!-- {% extends 'layouts/account' %} -->
+<!-- {% block 'body/content/tabcontent' %} -->
+<!--   {% paginate store.quotations by 4 %} -->
+<!--     {%if store.quotations == null or store.quotations.size == 0 %} -->
+<!--       <div class="text-center"> -->
+<!--         {{ 'account_quotation_empty' | translate }} -->
+<!--       </div> -->
+<!--     {% else %} -->
+<!--       <div class="row justify-content-between"> -->
+<!--         <div class="col-auto pl-0"> -->
+<!--           <h1 class="h3"> -->
+<!--             {{ 'account_quotation_title' | translate }} -->
+<!--           </h1> -->
+<!--         </div> -->
+<!--         <div class="col-auto pr-0"> -->      
+<!--           {%include 'paginate' with paginate %} -->
+<!--         </div> -->
+<!--       </div> -->
+<!--       <div class="row"> -->
+<!--         {% for quotation in paginate.collection %} -->
+<!--           <div class="col-12 border mb-2 mt-2"> -->
+<!--             <div class="row justify-content-between align-items-center pt-2 pb-2"> -->
+<!--               <div class="col-auto"> -->
+<!--                 <div class="row align-items-center"> -->
+<!--                   <div class="col-auto border-right lead"> -->
+<!--                     <a href="{% path_to account_quotation_details %}?quotation_id={{quotation.id}}" class="text-dark font-weight-bold"> -->
+<!--                       {{quotation.name}} -->
+<!--                     </a> -->
+<!--                   </div> -->
+<!--                   <div class="col-auto border-right lead"> -->
+<!--                     {{quotation.date  | format_date }} -->
+<!--                   </div> -->
+<!--                   <div class="col-auto lead"> -->
+<!--                     {% include 'currency' | value: quotation.amount.total %} -->
+<!--                   </div> -->
+<!--                   <div class="col-12 col-md-auto"> -->
+<!--                     {% case quotation.state%} -->
+<!--                       {% when 'estimating' %} -->
+<!--                       <div class="badge badge-primary text-white"> -->
+<!--                         <i class="fa fa-cogs"></i> {{'account_quotation_status_' | append: quotation.state | translate}} -->
+<!--                       </div> -->
+<!--                       {% when 'estimated' %} -->
+<!--                       <div class="badge badge-success"> -->
+<!--                         <i class="far fa-file"></i> {{'account_quotation_status_' | append: quotation.state | translate}} -->
+<!--                       </div> -->
+<!--                       {% else %} -->
+<!--                       <div class="badge badge-warning"> -->
+<!--                         {{quotation.state }} -->
+<!--                       </div> -->
+<!--                     {% endcase %} -->
+<!--                   </div> -->
+<!--                 </div> -->
+
+<!--               </div> -->
+              
+<!--               <div class="col-12 col-sm-auto text-center text-sm-right pt-3 pt-md-0"> -->
+<!--                 <a href="{% path_to account_quotation_details %}?quotation_id={{quotation.id}}" class="btn btn-outline-primary"> -->
+<!--                   {{'show_more' | translate}} -->
+<!--                 </a> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         {% endfor %} -->
+<!--       </div> -->
+<!--       <div class="row justify-content-end"> -->
+<!--         <div class="col-auto pr-0"> -->      
+<!--           {%include 'paginate' with paginate %} -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     {% endif %} -->
+<!--   {% endpaginate %} -->
+<!-- {% endblock %} -->

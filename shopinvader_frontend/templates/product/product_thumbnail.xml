@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="product_thumbnail" name="Shopinvader Product Thumbnail">
+    <t t-if="display_horizontal" t-set="extra_class" t-value="'product-thumbnail-horizontal'" />
+    <t t-if="display_lite" t-set="extra_class" t-value="'product-thumbnail-lite'" />
+    <div class="card product-thumbnail bg-white m-0 h-100 pb-1 #{extra_class}">
+      <div class="product-thumbnail-img loader">
+        <div class="loader-icon"></div>
+        <!-- TODO -->
+        <img class="group list-group-image card-img-top pr-2 pr-md-0"
+              src="{{product.images.first.medium.src  | default: site.metafields.theme.noimage }}"
+              alt="{{product.images.first.medium.alt}}"
+              data-link="{{product.url_key  | prepend: url_base }}?ref={{product.sku}}"/>
+        <t t-if="product['price'].get('discount', 0) > 0">
+          <div class="pb-1">
+            <div class="badge badge-warning p-2 badge-discount">
+              <span>Discount</span> <b>  -<t t-esc="product['price'].get('discount', 0)">%</b>
+            </div>
+          </div>
+        </t>
+      </div>
+      <div class="product-thumbnail-price card-body p-0 p-md-3 p-xl-2"
+           t-attf-data-link="product_url(product)?ref={{product['sku']}}">
+        <div class="d-vertical-only">
+          <span class="small">
+            <small>Up to</small>
+          </span>
+          <strong class="h5">
+            <span class="font-weight-bold {% if product.price.discount > 0%}text-warning{% else %}text-primary{% endif %}">
+              {% include 'currency' | value: product.price.value %}
+            </span>
+            {% if product.price.discount > 0 %}
+              <span class="text-dark small">
+                <s>{% include 'currency' | value: product.price.original_value %}</s>
+              </span>
+            {% endif %}
+          </strong>
+        </div>
+        <div class="d-horizontal-only">
+          <span class="small">
+            <small>{{'product_price_from' | translate}} </small>
+          </span>
+          <strong class="product-price-value">
+            <span class="font-weight-bold {%if product.price.discount > 0%}text-warning {%else%}text-primary{% endif %}">
+              {% include 'currency' | value: product.price.value %}
+            </span>
+            {%if product.price.discount > 0%}
+              <span class="text-dark small">
+                <s>{% include 'currency' | value: product.price.original_value %}</s>
+              </span>
+            {% endif %}
+          </strong>
+          
+        </div>
+      </div>
+      <div class="product-thumbnail-name card-body p-1 p-sm-3 p-xl-2">
+        <div class="font-weight-bold">
+          <a href="{{product.url_key  | prepend: url_base }}?ref={{product.sku}}" class="text-dark">
+            {{product.name}}
+
+          </a>
+        </div>
+        <a href="{{product.url_key  | prepend: url_base }}?ref={{product.sku}}#product-section-reviews" class="small">
+        {%if product.rating.summary.size > 0 %}
+          {% include 'rating_stars'
+            with rating_value: product.rating.summary.average
+          %}
+        {% endif%}
+        </a>
+        <div class="card-text">
+          <a href="{{product.categories.last.url_key  | prepend: url_base }}" class="text-dark"><u>{{product.categories.last.name}}</u></a>
+          
+        </div>
+        {% if product.variant_count > 0%}
+        <div class="pt-2 pb-2">
+          <a href="{{product.url_key  | prepend: url_base }}?ref={{product.sku}}" class="badge badge-secondary p-1">
+            {{'product_variants' | translate}}
+          </a>
+        </div>
+        {% endif%}
+        <div class="small d-horizontal-only">
+          <div class="product-short-description">
+            {{product.short_description}}
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+  </template>
+
+</odoo>

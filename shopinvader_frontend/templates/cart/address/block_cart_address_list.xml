@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="block_cart_address_list" name="Block Cart Address List">
+
+    <t t-if="len(store['addresses']) > 0">
+    <!-- TODO: refactor this using common templates as for shipping/invoicing listing -->
+      <div id="cart_address_container" data-shopinvader-container="">
+        <!-- {% if current_customer %} -->
+        <!-- Should not get here without being loged  in so he is a customer -->
+        <t t-if="'item_id' in request.httprequest.args">
+          <t t-set="item_id" t-value="request.httprequest.args.get('item_id', 0)"/>
+          <t t-set="form_action" t-value="'/invader/addresses/create'"/>
+          <t t-if="item_id and item_id.isdigit()">
+            <t t-set="form_action" t-value="'/invader/addresses/{}/update'.format(item_id)"/>
+          </t>
+          <form method="post" t-att-action="form_action" id="cart_update_form">
+            <input type="hidden" name="invader_success_url" t-att-value="cart_step.url" />
+            <input type="hidden" name="invader_error_url" t-attf-value="#{cart_step.url}?item_id=#{item_id}" />
+            <div class="row">
+              <div class="col-12 text-left pb-3 pt-3">
+                <a href="/shop/cart/address" class="text-dark text-uppercase font-weight-bold">
+                  <i class="fas fa-chevron-left"></i> Return
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <!-- {% include "address_form" with address, with_require: true %} -->
+                <t t-call="shopinvader_frontend.snippets_address_form">
+                  <t t-if="item_id!=''" t-set="address" t-value="[x for x in store['addresses'] if str(x['id'])==item_id][0]"/>
+                  <t t-else="" t-set="address" t-value="{'id': 0}"/>
+                </t>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <a href="/shop/cart/address" class="text-dark text-uppercase font-weight-bold">
+                  <i class="fas fa-chevron-left"></i> Return
+                </a>
+              </div>
+              <div class="col-6 text-right">
+                <button type="submit" class="btn btn-outline-dark" name="Submit">Submit</button>
+              </div>
+            </div>
+          </form>
+        </t>
+        <t t-else="">
+          <t t-call="shopinvader_frontend.block_cart_address_list_shipping" />
+          <t t-call="shopinvader_frontend.block_cart_address_list_invoicing" />
+          <div class="col-auto cart-address-actions">
+            <a class="btn btn-outline-dark btn-sm" data-toggle="modal" href="#modal-address-invoicing" role="button">
+              Set invoice address
+            </a>
+            <a class="btn btn-outline-dark btn-sm" t-att-href="request.httprequest.path + '?item_id='">
+              Add an address
+            </a>
+          </div>
+        </t>
+      </div>
+    </t>
+  </template>
+
+  <template id="block_cart_address_list_shipping" name="Block Cart Address List Shipping">
+    <div class="row justify-content-between align-items-start mb-2">
+      <div class="col-auto">
+        <h4 class="font-weight-bold">Shipping Address</h4>
+      </div>
+      <div class="col-12">
+        <form method="post" action="/invader/cart/update" id="cart_carrier_form" data-shopinvader-form="">
+          <input type="hidden" name="invader_success_url" t-att-value="request.httprequest.path" />
+          <input type="hidden" name="invader_error_url" t-att-value="request.httprequest.path" />
+          <!-- TODO: do we need these? -->
+          <input type="hidden" name="step[current]" value="cart_address"/>
+          <input type="hidden" name="step[next]" value="cart_checkout"/>
+
+          <t t-set="address_type" t-value="'shipping'" />
+          <t t-set="selected_address" t-value="cart.get(address_type, {}).get('address')"/>
+          <t t-if="not selected_address">
+            <t t-set="selected_address" t-value="store['addresses'][0]"/>
+          </t>
+          <t t-foreach="store['addresses']" t-as="address">
+            <div class="cart-item-list px-2 py-3">
+              <t t-call="shopinvader_frontend.block_cart_address_edit" />
+            </div>
+          </t>
+        </form>
+      </div>
+    </div>
+  </template>
+
+  <template id="block_cart_address_list_invoicing" name="Block Cart Address List Invoicing">
+    <div class="modal fade" id="modal-address-invoicing" tabindex="-1" role="dialog"
+         aria-labelledby="modal-address-invoicing-label" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-address-invoicing-label">
+              <span>Invoice address</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" t-translation="off">&amp;times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/invader/cart/update" id="cart_carrier_form">
+              <input type="hidden" name="invader_success_url" t-att-value="request.httprequest.path" />
+              <input type="hidden" name="invader_error_url" t-att-value="request.httprequest.path" />
+              <input type="hidden" name="step[current]" value="cart_address" />
+              <input type="hidden" name="step[next]" value="cart_checkout" />
+
+              <t t-set="address_type" t-value="'invoicing'" />
+              <t t-set="selected_address" t-value="cart.get(address_type, {}).get('address')"/>
+              <t t-if="not selected_address">
+                <t t-set="selected_address" t-value="store['addresses'][0]"/>
+              </t>
+              <t t-foreach="store['addresses']" t-as="address">
+                <div class="cart-item-list px-2 py-3">
+                  <t t-call="shopinvader_frontend.block_cart_address_edit" />
+                </div>
+              </t><!--foreach -->
+            </form>
+          </div><!--modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              <span>Continue</span>
+            </button>
+          </div><!--modal-footer -->
+        </div><!--modal-content -->
+      </div><!--modal-dialog -->
+    </div><!--modal -->
+  </template>
+
+</odoo>

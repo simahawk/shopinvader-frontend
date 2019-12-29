@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="shop_home" name="Shopinvader home TODO">
+
+    <t t-call="shopinvader_frontend.default_layout">
+      <div class="page">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <h3>Shop home TODO</h3>
+            </div>
+            TODO
+            <a href="/shop/product/test">Go to test product</a>
+          </div>
+        </div>
+      </div>
+    </t>
+
+  </template>
+
+</odoo>
+
+  <!-- title: Cart Step 3 -->
+  <!-- position: 102 -->
+  <!-- slug: shipping -->
+  <!-- handle: cart_address -->
+  <!-- position: 4 -->
+  <!-- listed: false -->
+  <!-- published: true -->
+  <!-- is_layout: false -->
+  <!-- seo_title: Shipping address | Shopinvader demo -->
+  <!-- sections_content: > -->
+  <!--   { -->
+  <!--     "cart": { -->
+  <!--       "settings": { -->
+  <!--         "large_size": false, -->
+  <!--         "submit_label": "Continue ", -->
+  <!--         "cart_current_step": "cart_address", -->
+  <!--         "cart_next_step": "cart_checkout" -->
+  <!--       }, -->
+  <!--       "blocks": [ -->
+  <!--         { -->
+  <!--           "type": "cell_text", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "full", -->
+  <!--             "content": "<h3>My shipping address</h3>" -->
+  <!--           } -->
+  <!--         }, -->
+  <!--         { -->
+  <!--           "type": "cart_address_list", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "lg" -->
+  <!--           } -->
+  <!--         }, -->
+  <!--         { -->
+  <!--           "type": "cart_summary", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "sm", -->
+  <!--             "display_border": true, -->
+  <!--             "display_submit": true, -->
+  <!--             "title": "Your order", -->
+  <!--             "display_lines": true -->
+  <!--           } -->
+  <!--         }, -->
+  <!--         { -->
+  <!--           "type": "cart_address", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "full", -->
+  <!--             "title": "<h3>Shipping address</h3>", -->
+  <!--             "address_type": "shipping", -->
+  <!--             "is_child": true -->
+  <!--           } -->
+  <!--         }, -->
+  <!--         { -->
+  <!--           "type": "cart_address", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "full", -->
+  <!--             "title": "<h3>Ivoice address</h3>", -->
+  <!--             "address_type": "invoicing", -->
+  <!--             "is_child": true -->
+  <!--           } -->
+  <!--         } -->
+  <!--       ] -->
+  <!--     } -->
+  <!--   } -->
+  <!-- {% extends 'layouts/checkout' %} -->

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="cart_address" name="Shopinvader cart shipping">
+
+    <t t-call="shopinvader_frontend.default_layout">
+      <div class="page">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <h3>My shipping address</h3>
+            </div>
+            <div class="col-8">
+              <!-- <t t-if="'item_id' in request.httprequest.args" t-call="shopinvader_frontend.block_cart_address_list"/> -->
+              <!-- <t t-else="" t-call="shopinvader_frontend.block_cart_address_list"/> -->
+              <t t-call="shopinvader_frontend.block_cart_address_list"/>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 block block_cart_summary">
+
+              <t t-set="checkout_button" t-value="False"/>
+              <t t-set="cart" t-value="store['cart']"/>
+
+              <t t-call="shopinvader_frontend.block_cart_summary">
+                <t t-set="display_lines" t-value="True"/>
+                <t t-set="submit_label" t-value="Continue"/>
+                <t t-set="display_submit" t-value="True"/>
+              </t>
+
+            </div>
+            <!-- {% global_section 'cart_breadcrumb' %} -->
+            <!-- <t t-call="shopinvader_frontend.cart_breadcrumb"></t> -->
+            <!-- <div class="pt-4 pb-4"> -->
+            <!-- {% section 'cart' %} -->
+            <!-- <t t-call="shopinvader_frontend.webshop_cart"></t> -->
+            <!-- </div> -->
+            <!-- {% sections_dropzone %} -->
+            <!-- </div> -->
+          </div>
+          <!-- {% endblock %} -->
+        </div>
+      </div>
+    </t>
+
+  </template>
+
+</odoo>
+
+  <!-- title: Cart Step 3 -->
+  <!-- position: 102 -->
+  <!-- slug: shipping -->
+  <!-- handle: cart_address -->
+  <!-- position: 4 -->
+  <!-- listed: false -->
+  <!-- published: true -->
+  <!-- is_layout: false -->
+  <!-- seo_title: Shipping address | Shopinvader demo -->
+  <!-- sections_content: > -->
+  <!--   { -->
+  <!--     "cart": { -->
+  <!--       "settings": { -->
+  <!--         "large_size": false, -->
+  <!--         "submit_label": "Continue ", -->
+  <!--         "cart_current_step": "cart_address", -->
+  <!--         "cart_next_step": "cart_checkout" -->
+  <!--       }, -->
+  <!--       "blocks": [ -->
+  <!--         { -->
+  <!--           "type": "cell_text", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "full", -->
+  <!--             "content": "<h3>My shipping address</h3>" -->
+  <!--           } -->
+  <!--         }, -->
+  <!--         { -->
+  <!--           "type": "cart_address_list", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "lg" -->
+  <!--           } -->
+  <!--         }, -->
+  <!--         { -->
+  <!--           "type": "cart_summary", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "sm", -->
+  <!--             "display_border": true, -->
+  <!--             "display_submit": true, -->
+  <!--             "title": "Your order", -->
+  <!--             "display_lines": true -->
+  <!--           } -->
+  <!--         }, -->
+  <!--         { -->
+  <!--           "type": "cart_address", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "full", -->
+  <!--             "title": "<h3>Shipping address</h3>", -->
+  <!--             "address_type": "shipping", -->
+  <!--             "is_child": true -->
+  <!--           } -->
+  <!--         }, -->
+  <!--         { -->
+  <!--           "type": "cart_address", -->
+  <!--           "settings": { -->
+  <!--             "cell_size": "full", -->
+  <!--             "title": "<h3>Ivoice address</h3>", -->
+  <!--             "address_type": "invoicing", -->
+  <!--             "is_child": true -->
+  <!--           } -->
+  <!--         } -->
+  <!--       ] -->
+  <!--     } -->
+  <!--   } -->
+  <!-- {% extends 'layouts/checkout' %} -->

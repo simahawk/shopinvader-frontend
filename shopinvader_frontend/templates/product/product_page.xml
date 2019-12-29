@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- TODO: -->
+<!-- <meta name="og:site_name" content="{{site.name}}"> -->
+<!-- <meta name="og:title" content="{{product.seo_title}}"> -->
+<!-- <meta name="og:url" content="{{ product.url_key | prepend: url_base }}?ref={{product.objectID }}"> -->
+<!-- <meta name="og:description" content="{{product.meta_description}}"> -->
+<!-- <meta name="og:image" content="{{ product.images.first.medium.src }}"> -->
+<!-- <meta name="description" content="{{product.meta_description}}"> -->
+<!-- <meta name="keywords" content="{{product.meta_keywords}}"> -->
+<!-- <title>{{product.seo_title}}</title> -->
+<!-- <link rel="canonical" href="{{base_url | append: '/' | append: product.url_key}}" /> -->
+<!-- TODO: include application/ld+json info all around. See locomotive templates -->
+  <template id="product_page" name="Product page">
+
+    <t t-call="shopinvader_frontend.default_layout">
+      <t t-if="product">
+        <div class="row">
+
+          <div class="block  block-product_title col-12 col-sm-6 col-lg-8  pt-4 pb-4">
+            <t t-call="shopinvader_frontend.block_product_title">
+            </t>
+          </div>
+
+          <div class="block  block-add_to_cart col-12 col-sm-6 col-lg-4  pt-4 pb-4">
+            <t t-call="shopinvader_frontend.block_product_add_to_cart">
+            </t>
+          </div>
+        </div>
+
+      </t>
+      <t t-else="">
+        <p>No product defined, means, no product displayed.</p>
+      </t>
+    </t>
+
+  </template>
+
+</odoo>

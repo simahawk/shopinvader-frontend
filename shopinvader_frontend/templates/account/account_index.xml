@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="account_index" name="Shopinvader Account Index">
+
+  <t t-call="shopinvader_frontend.account_layout">
+
+    <t t-if="len(context_item_data.get('sales', [])) == 0">
+      <div class="text-center">
+        You do not have any orders !
+      </div>
+    </t>
+    <t t-else="">
+      <div class="row justify-content-between">
+        <div class="col-auto pl-0">
+          <h1 class="h3">
+            My sales orders
+          </h1>
+        </div>
+        <div class="col-auto pr-0">
+        </div>
+      </div>
+      <div class="row">
+        <t t-foreach="store['sales']" t-as="sale">
+          <!-- <t t-call="shopinvader_frontend.account_order_item" /> -->
+        </t>
+      </div>
+    </t>
+  </t>
+
+</template>
+
+<template id="account_order_item" name="Shopinvader Account order item">
+  <t t-set="state_info" t-value="website.order_state_info(sale['state'])"/>
+            <div class="col-12 order mb-3 mt-2">
+              <div class="row">
+                <div class="col-12 order border round  pt-3 ">
+                  <div class="row justify-content-between ">
+                    <div t-attf-class="col-12 col-sm-auto order-header order-state-{{ sale['state'] }}">
+                      <div class="row lead">
+                        <div class="col-8 col-sm-auto border-right pl-sm-5">
+                          Order #<span class="font-weight-bold"><t t-esc="sale['name']"/></span>
+                        </div>
+                        <div class="col-4 col-sm-auto border-right">
+                          <t t-esc="sale['date']"/> <!-- {{sale.date   | format_date }} -->
+                        </div>
+                        <div class="col-8 col-sm-auto font-weight-bold">
+                          <!-- {% include 'currency' | value: sale.amount.total %} -->
+                            <t t-esc="sale['amount']['total']"/>
+                        </div>
+                        <div class="col-4 col-sm-auto ">
+                          <div t-attf-class="badge badge-{{ state_info['color'] }} text-white">
+                            <t t-esc="sale['state']"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-auto text-center">
+                      <a t-attf-href="#order-data-{{ sale['id'] }}" data-toggle="collapse" class="btn btn-outline-primary">
+                        show more
+                      </a>
+                    </div>
+                  </div>
+                  <div class="row mt-2 border-top">
+                    <div class="col-12 col-sm-6 border-right pb-2 pt-2">
+                      address
+                      <div class="font-weight-bold text-center text-sm-left">
+                            <t t-esc="sale['shipping']['address']['name']"/>
+                            <t t-esc="sale['shipping']['address']['street']"/>
+                            <t t-esc="sale['shipping']['address']['street2']"/>
+                            <t t-esc="sale['shipping']['address']['zip']"/>
+                            <t t-esc="sale['shipping']['address']['city']"/>
+  <!--                       {{sale.shipping.address.country_id.name}} -->
+                            <!-- <t t-esc="sale['shipping']['address']['country_id']['name']"/> -->
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-6 pb-2 pt-2">
+                      <div class="font-weight-bold">
+                            <!-- <t t-esc="sale['shipping']['selected_carrier']['name']"/> -->
+  <!--                       {{sale.shipping.selected_carrier.name}} --> 
+                      </div>
+                      <div class="d-flex">
+                        Shipping cost
+  <!--                       {% include 'currency' | value: sale.shipping.amount.total %} -->
+                            <!-- <t t-esc="sale['shipping']['amount']['total']"/> -->
+                      </div>
+  <!--                     <div> -->
+  <!--                       {% for track in sale.shipping.tracking %} -->
+  <!--                         <div> -->
+  <!--                           <a href="{{track.url}}"> -->
+  <!--                             {{"account_order_tracking" | translate }} {{track.value}} -->
+  <!--                           </a> -->
+  <!--                         </div> -->
+  <!--                       {% endfor %} -->
+  <!--                     </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div t-att-class="'row collapse show' if as_index == 0 else 'row collapse'" t-attf-id="order-data-{{ sale['id'] }}">
+                <div class="col-12 border border-top-0">
+                  <div class="row justify-content-center">
+                    <div class="col-12 col-lg-11 col-xl-10 pt-4">
+                      <div class="row">
+                        <div class="col-12 d-md-flex align-items-start mb-2">
+                          <div class="'order-step done' if state_info.level >= 0 else 'order-step'">
+                            <div class="icon">
+                              <i class="fas fa-shopping-basket"></i>
+                            </div>
+                            <div class="label font-weight-bold p-3">
+                              Ordered on <t t-esc="sale['date']"/>
+                              <!-- {{'account_order_level0' | translate}}{{sale.date   | format_date }} -->
+                            </div>
+                          </div>
+                          <div class="'order-step done' if state_info.level >= 1 else 'order-step'">
+                            <div class="icon">
+                              <i class="fas fa-money-bill-alt"></i>
+                            </div>
+                            <div class="label font-weight-bold p-3">
+                              <span class="pr-2">
+                                Checkout
+                              </span>
+                              <t t-esc="sale['amount']['total']"/>
+                              <!-- {% include 'currency' | value: sale.amount.total %} -->
+                            </div>
+                          </div>
+                          <div class="'order-step done' if state_info.level >= 2 else 'order-step'">
+                            <div class="icon">
+                              <i class="fas fa-truck-loading"></i>
+                            </div>
+                            <div class="label font-weight-bold p-3">
+                              Processing
+                            </div>
+                          </div>
+                          <div class="'order-step done' if state_info.level >= 3 else 'order-step'">
+                            <div class="icon">
+                              <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="label font-weight-bold p-3">
+                              Shipped
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <t t-foreach="sale['lines']['items']" t-as="line">
+                    <div class="row border-top pb-4 pt-4">
+                      <div class="col-4 col-lg-2 d-none d-sm-block">
+                        <div class="pr-xl-3 pl-xl-3">
+  <!--                         <img src="{{line.product.images.first.medium.src}}" alt="{{order_line.product.images.first.medium.alt }}" class="img-fluid  border"/> -->
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-8 col-lg-10">
+                        <a t-att-href="url_base + line['product']['url_key']" class="text-dark font-weight-bold" target="_blank">
+                          <t t-esc="line['product']['name']"/>
+                        </a>
+  <!--                       <a href="{{line.product.url_key | prepend: url_base }}" class="text-dark font-weight-bold" target="_blank"> -->
+  <!--                         {{line.product.name}} -->
+  <!--                       </a> -->
+                        <div class="">
+                          Quantity
+                          <b><t t-esc="line['qty']"/></b>
+                        </div>
+                        <div class="">
+                          Total
+                          <b><t t-esc="line['amount']['total']"/></b>
+                          <!-- <b>{% include 'currency' | value: line.amount.total %}</b> -->
+                        </div>
+                      </div>
+                    </div>
+                  </t>
+
+                </div>
+              </div>
+            </div>
+
+</template>
+
+
+</odoo>

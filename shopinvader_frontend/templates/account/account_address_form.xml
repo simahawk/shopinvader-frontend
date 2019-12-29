@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="account_address_form" name="Shopinvader Account Address Form">
+
+  <t t-set="form_action" t-value="'/invader/addresses/create'"/>
+  <t t-if="address and address.get('id')" t-set="form_action" t-value="'/invader/addresses/{}/update'.format(address['id'])"/>
+  <div class="pt-4">
+    <div class="card">
+      <h2 class="card-header bg-white text-dark">
+        <!-- TODO: update fontawesome to use last version (`fas` won't work) -->
+        <i class="fas fa-map-marker-alt text-primary"></i>
+        <span t-if="address">Edit shipping address</span>
+        <span t-else="">Create shipping address</span>
+      </h2>
+      <div class="card-body">
+        <form class="" t-att-action="form_action" method="post" data-autocomplete="address">
+          <input type="hidden" name="invader_success_url" t-att-value="url_base + '/account/addresses'" />
+          <input type="hidden" name="invader_error_url" value="{% path_to page %}{{form_params}}" />
+          <!--         {% include 'address_form' with address, with_require: true %} -->
+          <t t-call="shopinvader_frontend.snippets_address_form"/>
+          <div class="row">
+            <div class="col-6 text-left">
+              <a t-att-href="url_base + '/account/addresses'" class="btn btn-default ">Cancel</a>
+            </div>
+            <div class="col-6 text-right">
+              <input type="submit" name="submit" class="btn btn-primary " value="Submit"/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</template>
+
+  </odoo>
+
+<!-- title: Update address -->
+<!-- handle: account_address_form -->
+<!-- slug: addresses_form -->
+<!-- seo_title: Update my address | Shopinvader demo -->
+
+<!-- {% extends 'layouts/account '%} -->
+
+<!-- {% block 'body/content/tabcontent' %} -->
+<!-- {% assign form_action = '/invader/addresses/create' %} -->
+<!-- {% if params.item_id %} -->
+<!--   {% with_scope id: params.item_id %} -->
+<!--     {% assign address = store.addresses.first %} -->
+
+<!--     {% assign form_action = '/invader/addresses/' | append: address.id | append: "/update" %} -->
+<!--   {% endwith_scope%} -->
+<!-- {% endif %} -->
+<!-- <div class="pt-4"> -->
+<!--   <div class="card"> -->
+<!--     <h2 class="card-header bg-white text-dark"> --> 
+<!--       <i class="fas fa-map-marker-alt text-primary"></i> -->
+<!--       {{'account_address_update' | translate  }} -->
+<!--     </h2> -->
+<!--     <div class="card-body"> -->
+<!--       <form class="" action="{{form_action}}" method="post" data-autocomplete="address"> -->
+<!--         <input type="hidden" name="invader_success_url" value="{% path_to account_address %}" /> -->
+<!--         <input type="hidden" name="invader_error_url" value="{% path_to page %}{{form_params}}" /> -->
+<!--         {% include 'address_form' with address, with_require: true %} -->
+<!--         <div class="row"> -->
+<!--           <div class="col-6 text-left"> -->
+<!--             <a href="{% path_to account_address %}" class="btn btn-default " >{{'account_address_cancel' | translate}}</a> -->
+<!--           </div> -->
+<!--           <div class="col-6 text-right"> -->
+<!--             <input type="submit" name="submit" class="btn btn-primary " value="{{'account_address_submit' | translate}}"> -->
+<!--           </div> -->
+<!--         </div> -->
+<!--       </form> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+<!-- {% endblock %} -->

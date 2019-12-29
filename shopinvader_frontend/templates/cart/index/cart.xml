@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="section_cart" name="Shopinvader cart content">
+    
+    <h3 t-if="request.debug"><t t-esc="cart_step.name"/></h3>
+
+    <!-- This is not like the liquid templates -->
+    <!-- TODO: if we need to render different templates let's call other templates dinamically w/ #{tmpl} -->
+    <t t-if="cart_step.key=='cart_index'">
+      <t t-set="checkout_button" t-value="False"/>
+      <t t-set="cart" t-value="store['cart']"/>
+
+      <div class="container" id="cart" data-shopinvader-container="">
+
+        <p>Here is the content of your cart</p>
+
+        <!-- <div class="col-12 col-md-12 col-lg-8 block block_cart_lines"> -->
+          <div class="col-12 col-md-12 block block_cart_lines">
+
+            <t t-call="shopinvader_frontend.block_cart_lines">
+              <t t-set="readonly" t-value="False"/>
+            </t>
+            <!-- This is custom need to be updated with shopinvader example -->
+            <!-- <div class="row border-bottom"> -->
+              <!--   <div class="col-6">Product</div> -->
+              <!--   <div class="col-1">Qty</div> -->
+              <!--   <div class="col-2">Unit price</div> -->
+              <!--   <div class="col-1">Tax</div> -->
+              <!--   <div class="col-2">Total</div> -->
+              <!-- </div> -->
+            <!-- <t t-foreach="store['cart']['lines']['items']" t-as="item"> -->
+              <!-- <div class="row"> -->
+                <!--   <div class="col-6"> -->
+                  <!--     <t t-esc="item['product']['name']"/> -->
+                  <!--   </div> -->
+                <!--   <div class="col-1"> -->
+                  <!--     <t t-esc="item['qty']"/> -->
+                  <!--   </div> -->
+                <!--   <div class="col-2"> -->
+                  <!--     <t t-esc="item['amount']['price']"/> -->
+                  <!--   </div> -->
+                <!--   <div class="col-1"> -->
+                  <!--     <t t-esc="item['amount']['tax']"/> -->
+                  <!--   </div> -->
+                <!--   <div class="col-2"> -->
+                  <!--     <t t-esc="item['amount']['total']"/> -->
+                  <!--   </div> -->
+                <!-- </div> -->
+              <!-- </t> -->
+
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 block block_cart_summary">
+
+            <t t-call="shopinvader_frontend.block_cart_summary">
+              <t t-set="display_lines" t-value="False"/>
+              <t t-set="submit_label" t-value="Continue"/>
+              <t t-set="display_submit" t-value="True"/>
+            </t>
+
+
+          </div>
+
+        </div>
+      </t>
+      <t t-elif="cart_step.key=='cart_login'">
+        <t t-call="shopinvader_frontend.block_cart_login">
+        </t>
+      </t>
+      <t t-elif="cart_step.key=='cart_address'">
+        <!-- <p>Let s get the address rocking</p> -->
+        <t t-call="shopinvader_frontend.page_cart_address"/>
+        <!-- <t t-call="shopinvader_frontend.block_cart_login"> -->
+        <!-- </t> -->
+      </t>
+
+
+  </template>
+
+</odoo>
+
+<!-- { -->
+<!--   "name": "Shopping Cart", -->
+<!--   "class": "", -->
+<!--   "icon": "text", -->
+<!--   "keep_icon": true, -->
+<!--   "keep_name": true, -->
+<!--   "settings": [ -->
+<!--   	{ -->
+<!--       "label": "Cart current step", -->
+<!--       "id": "cart_current_step", -->
+<!--       "type": "text" -->
+<!--     }, -->
+<!--     { -->
+<!--       "label": "Cart next step", -->
+<!--       "id": "cart_next_step", -->
+<!--       "type": "text" -->
+<!--     }, -->
+<!--     { -->
+<!--       "label": "Wide", -->
+<!--       "id": "large_size", -->
+<!--       "type": "checkbox" -->
+<!--     }, -->
+<!--     { -->
+<!--       "label": "Submit button label", -->
+<!--       "id": "submit_label", -->
+<!--       "type": "text" -->
+<!--     }, -->
+<!--     { -->
+<!--       "label": "Cells Alignment", -->
+<!--       "id": "cells_align", -->
+<!--       "type": "select", -->
+<!--       "options": [ -->
+<!--         {"label": "Left","value": "start"}, -->
+<!--         {"label": "Center","value": "center"}, -->
+<!--         {"label": "Right", "value": "end"}, -->
+<!--         {"label": "Between", "value": "between"}, -->
+<!--         {"label": "Around", "value": "around"} -->
+<!--       ] -->
+<!--     }, -->
+<!--     { -->
+<!--       "label": "Origin data", -->
+<!--       "id": "origin_data", -->
+<!--       "type": "select", -->
+<!--       "options": [ -->
+<!--         {"label": "cart","value": "cart"}, -->
+<!--         {"label": "last_sale","value": "Last sale"} -->
+<!--       ] -->
+<!--     } -->
+<!--   ], -->
+<!--   "blocks": [ -->
+<!--     { -->
+<!-- 	    "name": "Cart Summary", -->
+<!-- 	    "type": "cart_summary", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Theme", -->
+<!-- 	        "id": "theme", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Transparent", "value": "none"}, -->
+<!-- 	          {"label": "Dark","value": "dark"}, -->
+<!-- 	          {"label": "Light","value": "light"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Show border", -->
+<!-- 	        "id": "display_border", -->
+<!-- 	        "type": "checkbox", -->
+<!-- 	        "default": true -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	      	"label": "Display submit button", -->
+<!-- 	      	"id": "display_submit", -->
+<!-- 	      	"type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Title", -->
+<!-- 	        "id": "title", -->
+<!-- 	        "type": "text", -->
+<!-- 	        "html": false, -->
+<!-- 	        "nb_rows": 1 -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Show cart items", -->
+<!-- 	        "id": "display_lines", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "Delivery Selector", -->
+<!-- 	    "type": "cart_delivery", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	      	"label": "Title", -->
+<!-- 	      	"id": "title", -->
+<!-- 	      	"type": "text", -->
+<!-- 	      	"html": true, -->
+<!-- 	        "nb_rows": 2 -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "Address", -->
+<!-- 	    "type": "cart_address", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	      	"label": "Title", -->
+<!-- 	      	"id": "title", -->
+<!-- 	      	"type": "text", -->
+<!-- 	      	"html": true, -->
+<!-- 	        "nb_rows": 2 -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Address type", -->
+<!-- 	        "id": "address_type", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Invoice", "value": "invoice"}, -->
+<!-- 	          {"label": "Shipping","value": "shipping"} -->
+<!-- 	        ] -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "text", -->
+<!-- 	    "type": "cell_text", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Text", -->
+<!-- 	        "id": "content", -->
+<!-- 	        "type": "text", -->
+<!-- 	        "html": true, -->
+<!-- 	        "nb_rows": 10 -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "Address selector", -->
+<!-- 	    "type": "cart_address_list", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "Login / Register", -->
+<!-- 	    "type": "cart_login", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Login card : title", -->
+<!-- 	        "id": "login_title", -->
+<!-- 	        "type": "text", -->
+<!-- 	        "html": true, -->
+<!-- 	        "nb_rows": 2 -->
+<!-- 	      }, -->
+
+<!-- 	      { -->
+<!-- 	        "label": "Guest card : title", -->
+<!-- 	        "id": "guest_title", -->
+<!-- 	        "type": "text", -->
+<!-- 	        "html": true, -->
+<!-- 	        "nb_rows": 2 -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Guest card : content", -->
+<!-- 	        "id": "guest_content", -->
+<!-- 	        "type": "text", -->
+<!-- 	        "html": true, -->
+<!-- 	        "nb_rows": 10 -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Guest card : button label", -->
+<!-- 	        "id": "guest_button", -->
+<!-- 	        "type": "text", -->
+<!-- 	        "html": false -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Inverse card", -->
+<!-- 	        "id": "inverse_card", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "Cart lines", -->
+<!-- 	    "type": "cart_lines", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Small", "value": "md"}, -->
+<!-- 	          {"label": "Medium", "value": "lg"}, -->
+<!-- 	          {"label": "Large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Layout", -->
+<!-- 	        "id": "table_layout", -->
+<!-- 	        "type": "radio", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "table", "value": "table"}, -->
+<!-- 	          {"label": "card","value": "card"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Show border", -->
+<!-- 	        "id": "display_border", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Readonly", -->
+<!-- 	        "id": "readonly", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      } -->
+	      
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "Payment mode", -->
+<!-- 	    "type": "cart_payment", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	      	"label": "Title", -->
+<!-- 	      	"id": "title", -->
+<!-- 	      	"type": "text", -->
+<!-- 	      	"html": true, -->
+<!-- 	        "nb_rows": 2 -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "Quotation", -->
+<!-- 	    "type": "cart_quotation", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	      	"label": "Title", -->
+<!-- 	      	"id": "title", -->
+<!-- 	      	"type": "text", -->
+<!-- 	      	"html": true, -->
+<!-- 	        "nb_rows": 2 -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	      	"label": "Content", -->
+<!-- 	      	"id": "title", -->
+<!-- 	      	"type": "text", -->
+<!-- 	      	"html": true, -->
+<!-- 	        "nb_rows": 10 -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	      	"label": "Button", -->
+<!-- 	      	"id": "title", -->
+<!-- 	      	"type": "text" -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	}, -->
+<!--   	{ -->
+<!-- 	    "name": "Submit Form", -->
+<!-- 	    "type": "cart_submit", -->
+<!-- 	    "settings": [ -->
+<!-- 	      { -->
+<!-- 	        "label": "Cell Size", -->
+<!-- 	        "id": "cell_size", -->
+<!-- 	        "type": "select", -->
+<!-- 	        "options": [ -->
+<!-- 	          {"label": "Auto", "value": "auto"}, -->
+<!-- 	          {"label": "Extra-small","value": "xs"}, -->
+<!-- 	          {"label": "Small","value": "sm"}, -->
+<!-- 	          {"label": "Medium", "value": "md"}, -->
+<!-- 	          {"label": "Large", "value": "lg"}, -->
+<!-- 	          {"label": "Extra-large", "value": "xl"}, -->
+<!-- 	          {"label": "Full", "value": "full"} -->
+<!-- 	        ] -->
+<!-- 	      }, -->
+<!-- 	      { -->
+<!-- 	        "label": "Child of previous block", -->
+<!-- 	        "id": "is_child", -->
+<!-- 	        "type": "checkbox" -->
+<!-- 	      } -->
+<!-- 	    ] -->
+<!--   	} -->
+<!--   ], -->
+<!--   "default": { -->
+<!--     "settings" : { -->
+<!--       "large_size": false, -->
+<!--       "submit_label": "Continue", -->
+<!--       "origin_data": "cart" -->
+<!--     }, -->
+<!--     "blocks": [ -->
+<!--       { -->
+<!--       	"type": "cart_summary", -->
+<!--       	"settings": { -->
+<!--       		"cell_size": "sm", -->
+<!--       		"title": "Total", -->
+<!--       		"theme": "none", -->
+<!--       		"display_border": true -->
+<!--       	} -->
+<!--       } -->
+<!--     ] -->
+<!--   } -->
+<!-- } -->
+
+<!-- {% assign checkout_button = false %} -->
+<!-- {% assign origin_data = section.settings.origin_data %} -->
+<!-- {% assign cart = store.cart %} -->
+
+<!-- {% if origin_data == 'last_sale' %} -->
+<!-- 	{% assign cart = store.last_sale %} -->
+<!-- {% endif %} -->
+
+<!-- <div class="container{% if section.settings.large_size %}-fluid{%endif%}" id="cart" data-shopinvader-container> -->
+
+<!-- 	<div class="row justify-content-center justify-content-md-{{cells_align}}"> -->
+<!-- 		{% assign has_child = false %} -->
+<!-- 		{% for block in section.blocks %} -->
+<!-- 			{% assign theme = '' %} -->
+<!-- 			{% assign next_block = section.blocks[forloop.index] %} -->
+<!-- 			{% case block.settings.cell_size %} -->
+<!--         {% when 'xs' %} -->
+<!--           {% assign css_cell = "col-12 col-md-4 col-lg-2 col-xl-2 "%} -->
+<!--         {% when 'sm' %} -->
+<!--           {% assign css_cell = "col-12 col-md-6 col-lg-4"%} -->
+<!--         {% when 'md' %} -->
+<!--           {% assign css_cell = "col-12 col-lg-12 col-xl-6 "%} -->
+<!--         {% when 'lg' %} -->
+<!--           {% assign css_cell = "col-12 col-md-12 col-lg-8 "%} -->
+<!--         {% when 'xl' %} -->
+<!--           {% assign css_cell = "col-12 col-lg-10 col-xl-10 "%} -->
+<!--         {% when 'full' %} -->
+<!--           {% assign css_cell = "col-12 "%} -->
+<!--         {% when 'auto' %} -->
+<!--           {% assign css_cell = "col-auto"%} -->
+<!--       {% endcase %} -->
+
+
+<!--       {% case block.settings.theme %} -->
+<!--         {% when 'dark' %} -->
+<!--           {% assign theme = "bg-dark text-light"%} -->
+<!--         {% when 'light' %} -->
+<!--           {% assign theme = "bg-light text-dark"%} -->
+<!--       {% endcase %} -->
+<!-- 			<div class="{{css_cell}} block block_{{block.type}}"> -->
+<!-- 				{% include 'block_debug' %} -->
+<!-- 				{% case block.type %} -->
+<!-- 					{% when 'cell_text' %} -->
+<!-- 						<div class="pt-2 pb-2"> -->
+<!-- 							{{ block.settings.content }} -->
+<!-- 						</div> -->
+<!-- 					{% when 'cart_summary' %} -->
+<!-- 						{% include block_cart_summary with -->
+<!-- 							title: block.settings.title, -->
+<!-- 							display_lines: block.settings.display_lines, -->
+<!-- 							display_submit: block.settings.display_submit, -->
+<!-- 							display_border: block.settings.display_border, -->
+<!-- 							items: cart.lines.items, -->
+<!-- 							submit_label: section.settings.submit_label, -->
+<!-- 							cart_next_step: section.settings.cart_next_step, -->
+<!-- 							cart_current_step: section.settings.cart_current_step, -->
+<!-- 							cart_next_page: section.settings.cart_next_page, -->
+<!-- 							theme -->
+<!-- 						%} -->
+<!-- 						{% if block.settings.display_submit == true %} -->
+<!-- 							{% assign checkout_button = true %} -->
+<!-- 						{% endif %} -->
+<!-- 					{% when 'cart_lines' %} -->
+<!-- 						{% assign readonly = block.settings.readonly %} -->
+						
+<!-- 						{% if origin_data != 'cart' %} -->
+<!-- 							{% assign readonly = true %} -->
+<!-- 						{% endif %} -->
+
+<!-- 						{% include block_cart_lines with -->
+<!-- 							theme, -->
+<!-- 							table_layout : block.settings.table_layout, -->
+<!-- 							cell_size : block.settings.cell_size, -->
+<!-- 							readonly -->
+<!-- 						%} -->
+<!-- 					{% when 'cart_delivery' %} -->
+<!-- 						{% include block_cart_delivery with -->
+<!-- 							title: block.settings.title -->
+<!-- 						%} -->
+<!-- 					{% when 'cart_address_list' %} -->
+<!-- 						{% include block_cart_address_list %} -->
+<!-- 					{% when 'cart_address' %} -->
+<!-- 						{% include block_cart_address with -->
+<!-- 							 title: block.settings.title, -->
+<!-- 							 address_type: block.settings.address_type -->
+<!-- 						%} -->
+<!-- 					{% when 'cart_login' %} -->
+<!-- 						{% include block_cart_login with -->
+<!-- 							cart_next_step : section.settings.cart_next_step, -->
+<!-- 							login_title: block.settings.login_title, -->
+<!-- 							guest_title: block.settings.guest_title, -->
+<!-- 							guest_content: block.settings.guest_content, -->
+<!-- 							guest_button: block.settings.guest_button, --> 
+<!-- 							inverse_card: block.settings.inverse_card, -->
+<!-- 						%} -->
+<!-- 					{% when 'cart_submit' %} -->
+<!-- 						{% include block_cart_submit with -->
+<!-- 							cart_next_step: section.settings.cart_next_step, -->
+<!-- 							cart_current_step: section.settings.cart_current_step, -->
+<!-- 							cart_next_page: section.settings.cart_next_page, -->
+<!-- 						%} -->
+<!-- 						{% assign checkout_button = true %} -->
+<!-- 					{% when 'cart_payment' %} -->
+<!-- 						{% include block_cart_payment with -->
+<!-- 							title: block.settings.title -->
+<!-- 						%} -->
+<!-- 					{% when 'cart_quotation' %} -->
+<!-- 						{% include block_cart_quotation with -->
+<!-- 							title: block.settings.title, -->
+<!-- 							content: block.settings.content, -->
+<!-- 							btn_label: block.settings.btn_label -->
+<!-- 						%} -->
+<!-- 				{% endcase %} -->
+			
+<!-- 				{% if next_block.settings.is_child == true %} -->
+<!-- 					{% if has_child ==  false%} -->
+<!-- 						{% assign has_child = true %} -->
+<!-- 						<div class="row subchild"> -->
+<!-- 					{% else %} -->
+<!-- 						</div> -->
+<!-- 					{% endif %} -->
+					
+<!-- 				{% else %} -->
+<!-- 					{% if has_child ==  true%} -->
+<!-- 						{% assign has_child = false %} -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					{% endif %} -->
+<!-- 					</div> -->
+<!-- 				{% endif %} -->
+<!-- 		{% endfor %} -->
+<!-- 	</div> -->
+<!-- </div> -->
+<!-- {% if section.settings.origin_data == 'cart' and store.cart.lines.count > 0 %} -->
+<!-- <div class="bottom-nav text-center d-md-none"> -->
+<!--   <form method="POST" action="/invader/cart/update"> -->
+<!--     <input type="hidden" name="invader_success_url" value="{% path_to section.settings.cart_next_step %}" /> -->
+<!--     <input type="hidden" name="invader_error_url" value="{% path_to page%}" /> -->
+<!--     <input type="hidden" name="step[current]" value="{{ section.settings.cart_current_step }}"> -->
+<!--     <input type="hidden" name="step[next]" value="{{section.settings.cart_next_step}}"> -->
+<!--     <div class="row"> -->
+<!--     	<div class="col-6 text-left d-none d-sm-flex"> -->
+<!--     		{{'cart_total_total' | translate }}<br> -->
+<!--     		<b>{% include 'currency' | value: cart.amount.total %}</b> -->
+<!--     	</div> -->
+<!--     	<div class="col-12 col-6 text-center text-sm-right"> -->
+<!--     		<button type="submit" name="submit" class="btn btn-outline-primary"> -->
+<!-- 		      {{"cart_checkout" | translate }} <i class="ti-angle-right"></i> -->
+<!-- 		    </button> -->
+<!--     	</div> -->
+<!--     </div> -->
+<!--   </form> -->
+<!-- </div> -->
+<!-- {% endif %} -->

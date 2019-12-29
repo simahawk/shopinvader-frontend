@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="account_profile" name="Shopinvader Account Profile">
+    <t t-call="shopinvader_frontend.account_layout">
+      <div class="row">
+        <div class="col-12 col-lg-7">
+            <!-- <t t-set="profile" t-value="next((x for x in addresses if x['address_type'] == 'profile'), {})"/> -->
+    <!--       {% with_scope address_type: "profile"%} -->
+    <!--         {% assign profile = store.addresses.first %} -->
+            <div class="card">
+              <h2 class="card-header bg-white">
+                <i class="far fa-user text-primary"></i>
+    My account profile
+              </h2>
+              <div class="card-body">
+                <form t-attf-action="/invader/addresses/{{ profile['id'] }}/update" method="POST" data-autocomplete="address">
+                  <input type="hidden" name="invader_success_url" t-att-value="request.httprequest.url" />
+                  <input type="hidden" name="invader_error_url" t-att-value="request.httprequest.url" />
+                  <t t-call="shopinvader_frontend.snippets_address_form">
+                    <t t-set="address" t-value="profile"/>
+                  </t>
+                  <div class="text-right">
+                    <input type="submit" name="submit" class="btn btn-primary " value="Submit"/>
+                  </div>
+                </form>
+              </div>
+            </div>
+    <!--       {% endwith_scope%} -->
+        </div>
+        <div class="col-5">
+        <!-- FIXME: get from settings via param auth_signup.reset_password -->
+          <t t-set="reset_password_enabled" t-value="1" />
+          <div class="card" t-if="reset_password_enabled">
+            <div class="card-body text-center">
+              <h1 class="h3 text-uppercase pb-3">
+                <i class="fa fa-key text-warning"></i>  
+                Password assistance
+              </h1>
+    <!--           {% include 'store_notifications' %} -->
+              <div class="text-left">
+                <div class="text-left mb-3">
+                  <span>Ask for password reset. You will receive a link to validate the change.</span>
+                </div>
+                <a t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </t>
+  </template>
+
+</odoo>

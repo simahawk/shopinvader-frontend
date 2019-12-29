@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="default_layout" name="Default layout">
+
+    <t t-call="website.layout">
+      <header>
+        <span>Header</span>
+        <!-- TODO: move to main menu bar -->
+        <a t-att-href="url_base + '/account/orders'" class="pull-right">
+          <t t-esc="request.env.user.name"/>
+        </a>
+        <a t-att-href="url_base + '/cart'" class="pull-right">
+          <span class="icon-label d-none d-md-flex">My Cart</span>
+        </a>
+      </header>
+      <div class="page">
+        <main>
+          <div class="container-fluid">
+            <!-- {% include 'store_notifications' %} -->
+          </div>
+          <div class="container">
+            <t t-raw="0"/>
+          </div>
+        </main>
+      </div>
+      <t t-call="shopinvader_frontend.main_loader" />
+    </t>
+
+  </template>
+
+</odoo>

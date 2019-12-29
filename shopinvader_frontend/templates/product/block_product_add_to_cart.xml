@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="block_product_add_to_cart" name="Block Product Add to cart">
+
+    <div class="bg-light  pt-3">
+      <t t-if="product_variant['price']['discount'] > 0">
+        <div class="pb-1">
+          <div class="badge badge-warning p-2">
+            Save <b> <t t-esc="product_variant.price.discount"/> %</b>
+          </div>
+        </div>
+      </t>
+      <div class=" pb-3 pr-3 pl-3">
+
+        <div class="row">
+          <div class="col-12  ">
+            <b class="text-right">
+              <!-- {%if product_variant.price.discount > 0%} -->
+              <!-- <div class="text-dark"> -->
+                <!--   <s>{% include 'currency' | value: product_variant.price.original_value %}</s> -->
+                <!-- </div> -->
+              <!-- {% endif %} -->
+              <!-- <span class="h2 pull-right font-weight-bold {%if product_variant.price.discount > 0%}text-warning{% else %} text-primary{% endif %}"> -->
+                <span class="h2 pull-right font-weight-bold">
+                  <t t-esc="str(product_variant['price']['value']) + ' ' + currency"/>
+                </span>
+                <!-- {% if product_variant.pricelist.tax_included == true %} -->
+                <!-- <sub class="text-size-base">{{'product_vat_inc' | translate}}</sub> -->
+                <!-- {% endif %} -->
+              </b>
+            </div>
+          </div>
+
+          <div class="row pt-4">
+            <div class="col-12">
+              <div class="">
+                <t t-esc="product_variant['name']"/>
+              </div>
+              <div class="small text-dark">
+                Product code
+                <strong><t t-esc="product_variant['sku']"/></strong>
+              </div>
+            </div>
+          </div>
+
+          <t t-if="block_settings['display_add_to_cart']">
+            <form method="POST" action="/invader/cart/add_item" data-shopinvader-form="">
+              <input type="hidden" name="invader_success_url" t-att-value="product_url(product_variant, added_to_cart=True)" />
+              <input type="hidden" name="invader_error_url" t-att-value="product_url(product_variant)" />
+              <input type="hidden" name="product_id" t-att-value="product_variant['objectID']" />
+
+              <div class="row form-horizontal product-form-qty d-none d-sm-block">
+                <label for="qty" class="col-4 col-sm-5 col-xl-12 control-label text-right text-xl-center">
+                  Quantity
+                </label>
+                <div class="col-8 col-xl-12">
+                  <t t-call="shopinvader_frontend.product_qty_input">
+                    <t t-set="qty" t-value="1"/>
+                  </t>
+                </div>
+              </div>
+
+              <div class="row ">
+                <!-- TODO: shopinvader_product_stock must be installed on odoo.master to have this -->
+                <t t-if="product_variant.get('stock_state')">
+                  <div class="col-12 text-left product-stock-state">
+                    <span t-attf-class="{{ product_variant['stock_state'] }} text-size-1xl">
+                      <t t-esc="product_variant['stock_state']"/>
+                    </span>
+                  </div>
+                </t>
+                <div class="col-12  text-right d-none d-sm-block">
+                  <button type="submit" class="btn btn-success btn-lg btn-block">
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </form>
+          </t>
+          <t t-else="">
+            <a t-att-href="url_base + '/' + product_variant['url_key']" class="btn btn-primary btn-lg btn-block mt-4 mb-4">
+              show more
+            </a>
+          </t>
+
+        </div>
+      </div>
+
+    </template>
+
+  </odoo>

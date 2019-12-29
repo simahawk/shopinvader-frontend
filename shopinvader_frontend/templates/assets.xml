@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- TODO create a specific asset bundle for the eshop -->
+  <template id="assets_frontend" inherit_id="website.assets_frontend" name="Shop Assets">
+    <xpath expr="//script[last()]" position="after">
+
+      <!-- <script type="text/javascript" src="/shopinvader_frontend/static/src/js/config.js"/>   -->
+      <script type="text/javascript" src="/shopinvader_frontend/static/src/js/shopinvader.jquery.js"/>
+      <script type="text/javascript" src="/shopinvader_frontend/static/src/js/application.js"/>
+      <!-- <script type="text/javascript" src="/shopinvader_frontend/static/src/js/js-cookie.js"/> -->
+      <!-- <script type="text/javascript" src="/shopinvader_frontend/static/src/js/popper.min.js"/> -->
+    </xpath>
+  </template>
+
+</odoo>

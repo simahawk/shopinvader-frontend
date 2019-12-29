@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- This one is not based on the existing liquid template -->
+  <template id="page_cart_end" name="Shopinvader Cart End">
+
+    <t t-call="shopinvader_frontend.default_layout">
+
+      <div class="page">
+        <header>
+          <!-- {% global_section 'header_lite', id:'cart_header',  placement: 'top'%} -->
+        </header>
+        <main>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <h3>Thank you</h3>
+              </div>
+              <div class="col-8">
+                <!-- <t t-call="shopinvader_frontend.block_cart_address"></t> -->
+              </div>
+              <div class="col-8">
+
+                <!-- <t t-call="shopinvader_frontend.cart_payment_bank_transfer"></t> -->
+
+              </div>
+              <!-- <div class="col-12 col-md-6 col-lg-4 block block_cart_summary"> -->
+
+              <!--   <t t-set="checkout_button" t-value="False"/> -->
+              <!--   <t t-set="cart" t-value="store['cart']"/> -->
+
+              <!--   <t t-call="shopinvader_frontend.block_cart_summary"> -->
+              <!--     <t t-set="display_lines" t-value="True"/> -->
+              <!--     <t t-set="display_submit" t-value="False"/> -->
+              <!--   </t> -->
+
+
+              <!-- </div> -->
+              <!-- {% global_section 'cart_breadcrumb' %} -->
+              <!-- <t t-call="shopinvader_frontend.cart_breadcrumb"></t> -->
+              <!-- <div class="pt-4 pb-4"> -->
+                <!-- {% section 'cart' %} -->
+                <!-- <t t-call="shopinvader_frontend.webshop_cart"></t> -->
+                <!-- </div> -->
+              <!-- {% sections_dropzone %} -->
+              <!-- </div> -->
+          </div>
+          <!-- {% endblock %} -->
+        </div>
+      </main>
+    </div>
+
+  </t>
+
+</template>
+
+</odoo>

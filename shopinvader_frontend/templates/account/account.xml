@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="account_layout" name="Shopinvader Account Layout">
+    <t t-call="shopinvader_frontend.default_layout">
+      <div t-attf-class="page #{context_key} #{context_item.key}">
+        <main>
+          <div class="container-fluid mt-4">
+            <div class="row  pt-2 pb-4 justify-content-between justify-content-xl-center align-items-end">
+              <div class="col-10 col-md-auto accound-icon">
+                <div class="d-flex">
+                  <div class="p-2 text-primary d-none d-md-block">
+                    <i class="far fa-user fa-3x "></i>
+                  </div>
+                  <div>
+                    <div class="lead text-uppercase font-weight-bold">
+                      Hello <span class="account_name" t-esc="request.env.user.name" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 col-lg-auto d-block d-lg-none">
+                <a href="#account-menu" data-toggle="collapse" class="btn btn-link btn-lg">
+                  <i class="fas fa-bars"></i>
+                </a>
+              </div>
+
+              <ul id="account-menu" class="nav accound-menu collapse col-12 col-lg-auto ml-4 ml-xl-0 pl-xl-0 d-lg-flex">
+                <t t-foreach="context_items.values()" t-as="ctx_page">
+                  <li t-attf-class="nav-item #{'active' if ctx_page.url == request.httprequest.path else ''}">
+                    <a t-att-href="ctx_page.url" class="nav-link" t-esc="ctx_page.title" />
+                  </li>
+                </t>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col-12 pt-3">
+                <div class="container">
+                 <t t-raw="0"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </t>
+  </template>
+</odoo>

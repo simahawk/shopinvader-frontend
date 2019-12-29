@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- TODO:  is this really needed? -->
+  <template id="single_product" name="Web shop specific product">
+    <t t-call="website.layout">
+      <h1>Product page #FIXME</h1>
+      <t t-call="shopinvader_frontend.product_page"></t>
+    </t>
+  </template>
+
+</odoo>

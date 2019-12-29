@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="block_cart_address_edit" name="Shopinvader cart address">
+    <t t-if="address">
+      <t t-if="request.debug and request.params.get('debug') != 'assets'">
+        <div class="debug-info">
+          <h2 t-translation="off">Debug info</h2>
+          <h3 t-translation="off">TYPE</h3>
+          <p t-esc="address_type" />
+          <h3 t-translation="off">ADDR</h3>
+          <p t-esc="address" />
+          <h3 t-translation="off">SEL</h3>
+          <p t-esc="selected_address" />
+        </div>
+      </t>
+      <div class="d-flex flex-row align-items-center">
+        <div class="left p-2">
+          <input
+            data-autosubmit="1" type="radio" class="form-radio"
+            t-att-value="address['id']"
+            t-attf-name="#{address_type}[address][id]"
+            t-attf-id="#{address_type}#{address['id']}" autocomplete="off"
+            t-att-checked="'checked' if address['id'] == selected_address['id'] else None"
+            />
+        </div>
+        <div class="right flex-grow-1 pl-2">
+          <div class="name">
+            <a class="edit-address pull-right font-style-underline"
+               t-att-href="request.httprequest.path + '?' + keep_query('*', item_id=address['id'])">
+              <span>Edit</span>
+            </a>
+            <label t-attf-for="shipping#{address['id']}">
+              <t t-esc="address['name']"/>
+            </label>
+          </div>
+          <t t-call="shopinvader_frontend.block_cart_address_info" />
+        </div>
+      </div>
+    </t>
+  </template>
+
+  <template id="block_cart_address_display" name="Shopinvader cart address">
+    <t t-if="address">
+      <label class="pt-3 pb-3" t-attf-for="shipping#{address['id']}">
+        <div class="row">
+          <div class="col">
+            <b>
+              <t t-esc="address['name']"/>
+            </b>
+          </div>
+          <div class="col">
+            <t t-call="shopinvader_frontend.block_cart_address_info" />
+          </div>
+        </div>
+      </label>
+    </t>
+  </template>
+
+  <template id="block_cart_address_info" name="Shopinvader cart address_info">
+    <t t-if="address">
+      <div class="d-flex flex-column">
+        <!-- <i class="ti-location-pin pr-2 pt-1"></i> -->
+        <div class="location">
+          <span t-esc="address['street']" /><br />
+          <t t-if="address['street2']">
+            <span t-esc="address['street2']" /><br />
+          </t>
+          <span t-esc="address['zip']" /> - <span t-esc="address['city']" />, <span t-esc="address['country']['name']" />
+        </div>
+        <div class="phone" t-if="address['phone']">
+          <i class="fa fa-phone pr-2"></i>
+          <span t-esc="address['phone']" /><br />
+        </div>
+      </div>
+    </t>
+  </template>
+
+</odoo>

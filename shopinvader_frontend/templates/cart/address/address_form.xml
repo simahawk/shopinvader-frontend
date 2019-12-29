@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="snippets_address_form" name="Snippet Address Form">
+
+    <!-- Not dealing with those yet -->
+    <!-- <t t-set="input_group" t-value=""/> -->
+    <t t-set="prefix" value="["/>
+    <t t-set="suffix" value="]"/>
+    <t t-set="prefix_id" value="_"/>
+
+    <div class="address-form">
+      <input t-if="address" type="hidden" id="id" t-att-name="prefix +  'id' + suffix" t-att-value="address['id']"/>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label t-att-for="prefix_id + 'name'" class="required">Name</label>
+            <input type="text" t-att-name="prefix + 'name' + suffix" class="form-control" t-att-id="prefix_id + 'name'" placeholder="Name" data-required="required" t-att-value="address.get('name', '')" autocomplete="off"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label t-att-for="prefix_id + 'street'" >Address line 1</label>
+            <input type="text" t-att-name="prefix + 'street' + suffix" class="form-control" data-toggle="autocomplete" t-att-id="prefix_id + 'street'" placeholder="Address line 1" data-required="required" data-bind="route" autocomplete="off" t-att-value="address.get('street', '')"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label t-att-for="prefix_id + 'street2'">Address line 2</label>
+            <input type="text" t-att-name="prefix + 'street2' + suffix" class="form-control" t-att-id="prefix_id + 'street2'" t-att-value="address.get('street2', '')" placeholder="Address line 2" autocomplete="off"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-5 col-sm-3">
+          <div class="form-group">
+            <label t-att-for="prefix_id + 'zip'" class="required">Zip code</label>
+            <input type="text" t-att-name="prefix + 'zip' + suffix" class="form-control" t-att-id="prefix_id + 'zip'" t-att-value="address.get('zip', '')" placeholder="Zip code" data-required="required" data-bind="postal_code" autocomplete="off"/>
+          </div>
+        </div>
+        <div class="col-7 col-sm-6">
+          <div class="form-group">
+            <label t-att-for="prefix_id + 'city'" class="required">City</label>
+            <input type="text" t-att-name="prefix + 'city' + suffix" class="form-control" t-att-id="prefix_id + 'city'" t-att-value="address.get('city', '')" placeholder="City" data-required="required" data-bind="locality" autocomplete="off"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-3">
+            <div class="form-group">
+              <label t-att-for="prefix_id + 'country_id'" class="required">Country</label>
+              <select class="form-control" t-att-id="prefix_id + 'country_id'" t-att-name="prefix + 'country[id]' + suffix">
+                <t t-foreach="store_settings.available_countries" t-as="country">
+                  <option t-if="country['id'] == address.get('country_id', 0)" t-att-value="country['id']" selected="selected"><t t-esc="country['name']"/></option>
+                  <option t-else="" t-att-value="country['id']"><t t-esc="country['name']"/></option>
+                </t>
+                </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="form-group">
+              <label t-att-for="prefix_id + 'phone'" class="required">Phone</label>
+              <input type="tel" class="form-control" required="1" t-att-id="prefix_id + 'phone'" t-att-name="prefix + 'phone' + suffix" t-att-placeholder="Phone" t-att-value="address.get('phone', '')" autocomplete="off" data-required="required"/>
+            </div>
+          </div>
+
+          </div>
+      </div>
+
+    </template>
+
+  </odoo>
+
+
+
+<!-- {% block "address_form" %} -->
+
+<!-- {% action 'set prefix and suffix element name' %} -->
+<!--   var input_group = getProp('input_group'); -->
+<!--   if(input_group == null) { -->
+<!--     var input_group = ''; -->
+<!--   } -->
+<!--   var suffix = ''; -->
+<!--   var prefix_id= ''; -->
+<!--   var prefix = ''; -->
+<!--   if(input_group != '') { -->
+<!--     prefix = input_group+'['; -->
+<!--     suffix = ']'; -->
+<!--     prefix_id = input_group+'_'; -->
+<!--   } -->
+
+<!--   setProp('prefix', prefix); -->
+<!--   setProp('suffix', suffix); -->
+<!--   setProp('prefix_id', prefix_id); -->
+<!--   var with_require = getProp('with_require'); -->
+<!--   if(with_require == true) { -->
+<!--     setProp('require', 'required="required"'); -->
+<!--   } -->
+<!--   else { -->
+<!--     setProp('require', 'data-required="required"'); -->
+<!--   } -->
+
+<!-- {% endaction %} -->
+
+<!-- <div class="address-form"> -->
+<!--   <input type="hidden" id="id" name="{{ 'id' | prepend: prefix | append: suffix }}" value="{{address.id | round}}"> -->
+<!--   <div class="row"> -->
+<!--     <div class="col-12"> -->
+<!--       <div class="form-group"> -->
+<!--         <label for="{{ 'name' | prepend: prefix_id }}" class="required">{{ "partner_name" | translate }}</label> -->
+<!--         <input type="text" name="{{ 'name' | prepend: prefix | append: suffix }}" class="form-control" id="{{ 'name' | prepend: prefix_id }}" placeholder="{{ 'partner_name' | translate }}" {{require}} value="{{address.name}}" autocomplete="off"> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="row"> -->
+<!--     <div class="col-12"> -->
+<!--       <div class="form-group"> -->
+<!--         <label for="{{ 'street' | prepend: prefix_id }}" >{{ 'partner_address1' | translate }}</label> -->
+<!--         <input type="text" name="{{ 'street' | prepend: prefix | append: suffix }}" class="form-control" data-toggle="autocomplete" id="{{ 'street' | prepend: prefix_id }}" placeholder="{{ 'partner_address1' | translate }}" {{require}} data-bind="route" autocomplete="off" value="{{address.street}}"> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="row"> -->
+<!--     <div class="col-12"> -->
+<!--       <div class="form-group"> -->
+<!--         <label for="{{ 'street2' | prepend: prefix_id }}"> {{ 'partner_address2' | translate }}</label> -->
+<!--         <input type="text" name="{{ 'street2' | prepend: prefix | append: suffix }}" class="form-control" id="{{ 'street2' | prepend: prefix_id }}" value="{{address.street2}}" placeholder="{{ 'partner_address2' | translate }}" autocomplete="off"> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   <div class="row"> -->
+<!--     <div class="col-5 col-sm-3"> -->
+<!--       <div class="form-group"> -->
+<!--         <label for="{{ 'zip' | prepend: prefix_id }}" class="required">{{ 'partner_zipcode' | translate }}</label> -->
+<!--         <input type="text" name="{{ 'zip' | prepend: prefix | append: suffix }}" class="form-control" id="{{ 'zip' | prepend: prefix_id }}" value="{{address.zip}}" placeholder="{{ 'partner_zipcode' | translate }}" {{require}} data-bind="postal_code" autocomplete="off"> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--     <div class="col-7 col-sm-6"> -->
+<!--       <div class="form-group"> -->
+<!--         <label for="{{ 'city' | prepend: prefix_id }}" class="required">{{ 'partner_city' | translate }}</label> -->
+<!--         <input type="text" name="{{ 'city' | prepend: prefix | append: suffix }}" class="form-control" id="{{ 'city' | prepend: prefix_id }}" value="{{address.city}}" placeholder="{{ 'partner_city' | translate }}" {{require}} data-bind="locality" autocomplete="off"> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--     <div class="col-12 col-sm-3"> -->
+<!--       <div class="form-group"> -->
+<!--         <label for="{{ 'country_id' | prepend: prefix_id }}" class="required">{{ 'partner_country' | translate }}</label> -->
+<!--         <select class="form-control" id="{{ 'country_id' | prepend: prefix_id }}" name="{{ 'country[id]' | prepend: prefix | append: suffix }}"> -->
+<!--         {% for country in store.available_countries %} -->
+<!--           <option value="{{country.id}}" {%if country.id == adresse.country_id %}selected="selected"{%endif%}>{{country.name}}</option> -->
+<!--         {% endfor %} -->
+<!--         </select> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--     <div class="col-12 col-sm-6"> -->
+<!--       <div class="form-group"> -->
+<!--         <label for="{{ 'phone' | prepend: prefix_id }}" class="required">{{ 'partner_phone' | translate }}</label> -->
+<!--         <input type="tel" class="form-control" id="{{ 'phone' | prepend: prefix_id }}" name="{{ 'phone' | prepend: prefix | append: suffix }}" placeholder="{{ 'partner_phone' | translate }}" value="{{address.phone}}" autocomplete="off" {{require}}> -->
+<!--       </div> -->
+<!--     </div> -->
+
+<!--   </div> -->
+<!-- </div> -->
+<!-- {% endblock %} -->

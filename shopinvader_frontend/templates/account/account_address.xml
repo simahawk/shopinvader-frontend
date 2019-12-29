@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="account_addresses" name="Shopinvader Account Address">
+        <t t-call="shopinvader_frontend.account_layout">
+          <div class="row justify-content-between">
+            <div class="col-auto">
+              <h1 class="h3">My addresses</h1>
+            </div>
+            <div class="col-auto">
+              <form t-att-action="url_base + '/account/addresses_form'" method="post">
+                <button type="submit" name="button" class="btn btn-outline-primary">
+                  <i class="fa fa-plus"></i> Add an address
+                </button>
+              </form>
+            </div>
+            <div class="col-12">
+            <div class="row">
+              <t t-foreach="addresses" t-as="address">
+                <div class="col-12  mt-3 mb-2">
+                  <div class="card card-body">
+                    <div class="row">
+                      <div class="col-12 col-lg-4 border-right ">
+                        <div class="row align-items-center">
+                          <div class="col-auto pr-0">
+                            <i class="fas fa-map-marker-alt text-primary fa-2x"></i>
+                          </div>
+                          <div class="col-auto lead font-weight-bold">
+                            <t t-esc="address['name']"/>
+                          </div>
+                        </div>
+                        <div class="row small pt-3 pb-2">
+                          <form t-att-action="url_base + '/account/addresses_form'" method="get" class="col-6">
+                            <input type="hidden" name="item_id" t-att-value="address['id']"/>
+                            <button type="submit" t-att-name="'update_' + str(address['id'])" class="btn btn-outline-primary btn-block">
+                              <i class="fas fa-pencil-alt"></i> Update
+                            </button>
+                          </form>
+                          <form method="POST" t-att-action="'/invader/addresses/' + str(address['id']) + '/delete'" class="col-6">
+                            <input type="hidden" name="invader_success_url" value="request.httprequest.url" />
+                            <input type="hidden" name="invader_error_url" value="request.httprequest.url" />
+                            <button type="submit" name="button" class="btn btn-outline-danger btn-block">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-8">
+                        <address>
+                          <div class="">
+      <t t-esc="address['street']"/>
+                          </div>
+                          <div class="">
+      <t t-esc="address['street2']"/>
+                          </div>
+                          <div class="">
+      <t t-esc="address['zip']"/> - <t t-esc="address['city']"/>
+                          </div>
+                          <div class="">
+      <!--                       {{address.country.name}} -->
+      <t t-if="address.get('country', {})" t-esc="address['country'].get('name', '')"/>
+                          </div>
+                        </address>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+      </t> <!-- {% endfor %} -->
+            </div>
+      <!--     {% endwith_scope%} -->
+        </div>
+      </div>
+    </t>
+
+  </template>
+
+</odoo>
+
+
+<!-- handle: account_address -->
+<!-- title: Account addresses -->
+<!-- listed: false -->
+<!-- meta_description: -->
+<!-- meta_keywords: --> 
+<!-- position: 200 -->
+<!-- published: true -->
+<!-- seo_title: My addresses | Shopinvader demo -->
+<!-- slug: addresses -->
+
+<!-- {% extends 'layouts/account '%} -->
+
+<!-- {% block 'body/content/tabcontent' %} -->
+<!-- <div class="row justify-content-between"> -->
+<!--   <div class="col-auto"> -->
+<!--     <h1 class="h3">{{'account_address_lists' | translate  }}</h1> -->
+<!--   </div> -->
+<!--   <div class="col-auto"> -->
+<!--     <form action="{% path_to account_address_form %}" method="post"> -->
+<!--       <button type="submit" name="button" class="btn btn-outline-primary"> -->
+<!--         <i class="fa fa-plus"></i> {{'account_address_add' | translate}} -->
+<!--       </button> -->
+<!--     </form> -->
+<!--   </div> -->
+<!--   <div class="col-12"> -->
+<!--     {% with_scope address_type: "address"%} -->
+<!--       <div class="row"> -->
+<!--         {% for address in store.addresses%} -->
+<!--           <div class="col-12  mt-3 mb-2"> -->
+<!--             <div class="card card-body"> -->
+<!--               <div class="row"> -->
+<!--                 <div class="col-12 col-lg-4 border-right "> -->
+<!--                   <div class="row align-items-center"> -->
+<!--                     <div class="col-auto pr-0"> -->
+<!--                       <i class="fas fa-map-marker-alt text-primary fa-2x"></i> -->
+<!--                     </div> -->
+<!--                     <div class="col-auto lead font-weight-bold"> -->
+<!--                        {{address.name}} -->
+<!--                     </div> -->
+<!--                   </div> -->
+<!--                   <div class="row small pt-3 pb-2"> -->
+<!--                     <form action="{% path_to account_address_form %}" method="post" class="col-6"> -->
+<!--                       <input type="hidden" name="item_id" value="{{address.id}}"> -->
+<!--                       <button type="submit" name="update_{{address.id}}" class="btn btn-outline-primary btn-block"> -->
+<!--                         <i class="fas fa-pencil-alt"></i> {{'cart_address_update' | translate }} -->
+<!--                       </button> -->
+<!--                     </form> -->
+<!--                     <form method="POST" action="/invader/addresses/{{address.id | round}}/delete" class="col-6"> -->
+<!--                       <input type="hidden" name="invader_success_url" value="{% path_to page %}" /> -->
+<!--                       <input type="hidden" name="invader_error_url" value="{% path_to page %}" /> -->
+<!--                       <button type="submit" name="button" class="btn btn-outline-danger btn-block"> -->
+<!--                           <i class="fas fa-trash"></i> {{'cart_address_delete' | translate }} -->
+<!--                       </button> -->
+<!--                     </form> -->
+<!--                   </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-12 col-lg-8"> -->
+<!--                   <address> -->
+<!--                     <div class=""> -->
+<!--                       {{address.street}} -->
+<!--                     </div> -->
+<!--                     <div class=""> -->
+<!--                       {{address.street2}} -->
+<!--                     </div> -->
+<!--                     <div class=""> -->
+<!--                       {{address.zip}} - {{address.city}} -->
+<!--                     </div> -->
+<!--                     <div class=""> -->
+<!--                       {{address.country.name}} -->
+<!--                     </div> -->
+<!--                   </address> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         {% endfor %} -->
+<!--       </div> -->
+<!--     {% endwith_scope%} -->
+<!--   </div> -->
+<!-- </div> -->
+<!-- {% endblock %} -->

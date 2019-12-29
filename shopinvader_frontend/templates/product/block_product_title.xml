@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="block_product_title" name="Block Product Title">
+
+    <div>
+        <t t-esc="product_variant.name"/>
+
+      <a class="text-center text-md-left h2" t-att-href="url_base + '/' + product_variant['url_key']">
+        <t t-esc="product_variant['name']"/>
+      </a>
+    </div>
+    <div class="product-details">
+      <t t-if="'brand' in product_variant">
+        <!-- NB: to have brands you must install `product_brand`
+        and add an exporter conf for it. See `shopinvader_demo_app`.
+         -->
+        <div class="d-none d-sm-inline-block pr-4">
+          <t t-esc="product_variant['brand']['name']"/>
+        </div>
+      </t>
+      <div class="d-none d-sm-inline-block pr-4 product-category" t-if="product_category">
+        <a t-attf-href="/shop/category/#{ product_category['url_key'] }">
+          <span t-esc="product_category['name']" />
+        </a>
+      </div>
+    </div>
+  </template>
+
+</odoo>

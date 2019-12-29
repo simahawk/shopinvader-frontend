@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="block_cart_lines" name="Block Cart Lines">
+
+    <!-- {% if table_layout == 'table'  %} -->
+    <!-- 	{% assign theme = theme | append: ' border-0' %} -->
+    <!-- 	{% assign css_line = " border-bottom pr-0 pl-0" %} -->
+
+    <!-- 	<div class="border-bottom pt-2 pb-2 d-none d-md-block"> -->
+      <!-- 		<div class="row font-weight-bold "> -->
+        <!-- 			<div class="col-7 col-sm-10 col-md-7"> -->
+          <!-- 				{{ 'cart_item_desc' | translate }} -->
+          <!-- 			</div> -->
+        <!-- 			{% if cell_size != 'md'%} -->
+        <!-- 				<div class="col-md-3"> -->
+          <!-- 					{{ 'cart_quantity' | translate }} -->
+          <!-- 				</div> -->
+        <!-- 				<div class="col-auto"> -->
+          <!-- 					{{'cart_head_total' | translate }} -->
+          <!-- 				</div> -->
+        <!-- 				{% endif %} -->
+        <!-- 		</div> -->
+      <!-- 	</div> -->
+    <!-- {% endif %} -->
+
+    <t t-foreach="cart['lines']['items']" t-as="cart_line">
+
+      <!-- {% if product_id == null or cart_line.product.key == product_id %} -->
+      <div class="card mb-4 ">
+        <div class="card-body  border-bottom pr-0 pl-0">
+          <div class="row">
+            <div class="col-4 col-sm-2 col-md-2 ">
+              <!-- <img src="{{cart_line.product.images.first.medium.src | default: site.metafields.theme.noimage}}" alt="{{cart_line.product.images.first.medium.alt}}" title="{{cart_line.product.name}}"  class="img-fluid"> -->
+              </div>
+              <!-- {% if cell_size == 'md' %} -->
+              <!-- {% assign cell_label_css = "col-6 col-sm-5 col-md-10" %} -->
+              <!-- {% else %} -->
+              <!-- {% assign cell_label_css = "col-8 col-sm-10 col-md-5" %} -->
+              <!-- {% endif %} -->
+              <div class="col-8 col-sm-10 col-md-5 h4 p-0">
+                <div class="font-weight-bold"><t t-esc="cart_line['product']['model']['name']"/></div>
+                <div class="small text-dark"><t t-esc="cart_line['product']['short_name']"/></div>
+                <div class="small text-dark">
+                  SKU <t t-esc="cart_line['product']['sku']"/>
+                  <a t-att-href="url_base + '/' + cart_line['product']['url_key']" class="btn btn-link text-underline">
+                    show more
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-5">
+                <div class="row text-right m-0 mt-3 mt-xl-0">
+                  <div class="col-6 col-sm-5 col-md-7">
+                    <form class="cart-line-qty" method="POST" action="/invader/cart/update_item" data-shopinvader-form="">
+                      <input type="hidden" name="invader_success_url" t-att-value="request.httprequest.path" />
+                      <input type="hidden" name="invader_error_url" t-att-value="request.httprequest.path" />
+                      <input type="hidden" name="item_id" t-att-value="cart_line['id']"/>
+                      <t t-if="readonly == True">
+                        <center>
+                          <div class="small text-dark">
+                            Quantity
+                          </div>
+                          <t t-esc="cart_line['qty']"/>
+                        </center>
+                      </t>
+                      <t t-else="">
+                        <t t-call="shopinvader_frontend.product_qty_input">
+                          <t t-set="qty" t-value="cart_line['qty']"/>
+                        </t>
+                      </t>
+                    </form>
+                    <t t-if="readonly != True">
+                      <form class="cart-line-qty text-left" method="POST" action="/invader/cart/delete_item" data-shopinvader-form="">
+                        <input type="hidden" name="invader_success_url" t-att-value="request.httprequest.path" />
+                        <input type="hidden" name="invader_error_url" t-att-value="request.httprequest.path" />
+                        <input type="hidden" name="item_id" t-att-value="cart_line['id']"/>
+                        <button type="submit" class="btn btn-link text-dark pl-0">
+                          <span class="text-darker ti-close small"></span>Delete item
+                        </button>
+                      </form>
+                    </t>
+                  </div>
+                  <!-- {% if cell_size == 'md' %} -->
+                  <!-- 	{% assign cell_price_css = "col-6 col-sm-5 col-md-12" %} -->
+                  <!-- {% else %} -->
+                  <!-- 		{% assign cell_price_css = "col-6 col-sm-5 col-md-5" %} -->
+                  <!-- {% endif %} -->
+                  <div class="col-6 col-sm-5 col-md-5 pb-0 pb-sm-3 mt-3 mt-sm-0">
+                    <!-- {% if table_layout == 'card' %} -->
+                    <div class="small text-dark">
+                      Item Total
+                    </div>
+                    <!-- {% endif %} -->
+                    <div class="h4 font-weight-bold">
+                      <!-- {% if business == true%} -->
+                      <!--   {% include 'currency' | value: cart_line.amount.untaxed %} -->
+                      <!-- {% else %} -->
+                      <!--   {% include 'currency' | value: cart_line.amount.total %} -->
+                      <!-- {% endif %} -->
+                      <t t-esc="cart_line['amount']['total']"/>
+                    </div>
+                    <t t-if="cart_line['discount']['rate'] > 0">
+                      <div class="">
+                        <div class="badge badge-warning p-2 badge-discount small">
+                          SAVE <b> - <t t-esc="['cart_line']['discount']['rate']"/> %</b>
+                        </div>
+                      </div>
+                    </t>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- {% endif%} -->
+      </t>
+      <!-- {% endfor%} -->
+
+    </template>
+  </odoo>

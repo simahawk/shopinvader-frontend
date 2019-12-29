@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="product_qty_input" name="Product Quantity Input">
+
+    <t t-set="input_css" t-value=""/>
+    <t t-set="input_css" t-value="input-group-sm" t-if="small"/>
+
+    <div t-attf-class="input-group {{ input_css }} product-qty ">
+      <div class="input-group-prepend" data-field="qty" data-type="minus">
+        <div class="btn btn-link ">
+          <i href="#" class="fa fa-minus text-dark"></i>
+        </div>
+      </div>
+      <input type="" class="form-control text-center" name="item_qty" id="qty" t-att-value="qty" autocomplete="off" max="100" step="1" min="1"/>
+        <div class="input-group-append" data-field="qty" data-type="plus">
+          <div class="btn btn-link">
+            <i href="#" class="fa fa-plus text-dark"></i>
+          </div>
+        </div>
+      </div>
+
+  </template>
+
+</odoo>

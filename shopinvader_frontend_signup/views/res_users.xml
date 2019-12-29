@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_users_form" model="ir.ui.view">
+    <field name="name">res.users.form.shopinvader</field>
+    <field name="model">res.users</field>
+    <field name="inherit_id" ref="base.view_users_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='access_rights']" position="inside">
+        <group string="Shopinvader" id="shopinavder">
+          <field name="is_shop_customer"/>
+        </group>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- <record id="view_users_tree" model="ir.ui.view">
+    <field name="name">res.users.tree.shopinvader</field>
+    <field name="model">res.users</field>
+    <field name="inherit_id" ref="base.view_users_tree"/>
+    <field name="arch" type="xml">
+      <field name="login" position="after">
+          <field name="is_shop_customer"/>
+      </field>
+    </field>
+  </record> -->
+
+  <record id="view_users_tree" model="ir.ui.view">
+    <field name="name">res.users.search.shopinvader</field>
+    <field name="model">res.users</field>
+    <field name="inherit_id" ref="base.view_users_search"/>
+    <field name="arch" type="xml">
+      <xpath expr="/search" position="inside">
+          <filter name="shop_user" string="Shop Customers" domain="[('is_shop_customer', '=', True)]"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>
